@@ -13,5 +13,25 @@
         <module>Common</module>
     </modules>
 
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- Netty -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>4.1.11.Final</version>
+            </dependency>
+
+            <!-- Guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>21.0</version>
+            </dependency>
+
+
+        </dependencies>
+    </dependencyManagement>
 
 </project>
