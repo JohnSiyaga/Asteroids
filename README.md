@@ -1,4 +1,4 @@
 # asteroid
 Asteroid game
 
-school = Gay
+By the Kankerlijeren Squad
