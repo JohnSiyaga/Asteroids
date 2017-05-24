@@ -1,4 +1,4 @@
-package net.exodiusnc.common.protocol;
+package net.exodiusmc.net.exodiusmc.asteroids.common.protocol;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
