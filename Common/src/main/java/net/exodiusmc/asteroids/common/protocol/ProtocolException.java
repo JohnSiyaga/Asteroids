@@ -1,4 +1,4 @@
-package net.exodiusmc.net.exodiusmc.asteroids.common.protocol;
+package net.exodiusmc.asteroids.common.protocol;
 
 /**
  * Thrown when  an issue arises during the processing of an

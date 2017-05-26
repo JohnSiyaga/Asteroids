@@ -1,9 +1,9 @@
-package net.exodiusmc.net.exodiusmc.asteroids.common.protocol;
+package net.exodiusmc.asteroids.common.protocol;
 
 import com.sun.deploy.config.ClientConfig;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.EventLoopGroup;
-import net.exodiusmc.net.exodiusmc.asteroids.common.util.Promise;
+import net.exodiusmc.asteroids.common.util.Promise;
 
 import java.io.Closeable;
 

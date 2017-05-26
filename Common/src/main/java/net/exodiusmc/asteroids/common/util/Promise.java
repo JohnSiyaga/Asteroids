@@ -1,4 +1,4 @@
-package net.exodiusmc.net.exodiusmc.asteroids.common.util;
+package net.exodiusmc.asteroids.common.util;
 
 import java.util.Arrays;
 import java.util.HashSet;

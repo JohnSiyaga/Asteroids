@@ -1,6 +1,6 @@
-package net.exodiusmc.net.exodiusmc.asteroids.common.protocol.packet;
+package net.exodiusmc.asteroids.common.protocol.packet;
 
-import net.exodiusmc.net.exodiusmc.asteroids.common.protocol.ProtocolException;
+import net.exodiusmc.asteroids.common.protocol.ProtocolException;
 
 /**
  * Represents a single packet of information that can be sent over a

@@ -1,4 +1,4 @@
-package net.exodiusmc.net.exodiusmc.asteroids.common.protocol.packet;
+package net.exodiusmc.asteroids.common.protocol.packet;
 
 /**
  * Copyright (c) ExodiusMC, 2017. Property of ExodiusMC.

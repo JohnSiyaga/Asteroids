@@ -1,4 +1,4 @@
-package net.exodiusmc.net.exodiusmc.asteroids.common.protocol.packet;
+package net.exodiusmc.asteroids.common.protocol.packet;
 
 /**
  * The most basic implementation of a packet, containing data

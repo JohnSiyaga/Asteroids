@@ -1,8 +1,8 @@
-package net.exodiusmc.net.exodiusmc.asteroids.common.protocol;
+package net.exodiusmc.asteroids.common.protocol;
 
 import com.sun.xml.internal.ws.api.message.Packet;
 import io.netty.channel.Channel;
-import net.exodiusmc.net.exodiusmc.asteroids.common.util.Promise;
+import net.exodiusmc.asteroids.common.util.Promise;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
