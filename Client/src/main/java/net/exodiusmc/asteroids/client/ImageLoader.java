@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author JZDRAGON
+ * @author John Siyaga
  * @version 1.0.0
  * @since 5/18/2017
  */
