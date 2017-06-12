@@ -1,5 +1,6 @@
 package net.exodiusmc.asteroids.common.util;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -250,5 +251,26 @@ public class Promise<R> implements Cloneable, Comparable<Promise<R>> {
     @Override
     public int compareTo(Promise<R> other) {
         return this.isSuccess() - other.isSuccess();
+    }
+
+	/**
+	 * Create a new combined promise that succeeds when all sub promises are completed.
+	 *
+	 * @param promises Sub promises
+	 * @return Promise
+	 */
+	public static Promise<Void> combine(Promise<?>... promises) {
+		return new Promise<>(master -> {
+			for(Promise p1 : promises) {
+				//noinspection unchecked
+				p1.then(o -> {
+					if(Arrays.stream(promises)
+						.filter(Promise::isCalled)
+						.count() == promises.length) {
+						master.success();
+					}
+				});
+			}
+		});
     }
 }
