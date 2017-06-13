@@ -1,16 +1,13 @@
 package net.exodiusmc.asteroids.common.util;
 
 import javafx.scene.image.Image;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Static utility class for loading various information from disk
@@ -20,8 +17,6 @@ import java.util.Map;
  * @since 5/27/2017
  */
 public class Loader {
-
-	private static Map<String, MediaPlayer> AUDIO = new HashMap<>();
 
     /**
      * Returns the URL to the resource on the specified path
@@ -68,45 +63,35 @@ public class Loader {
     }
 
 	/**
-	 * Load and buffer all MediaPlayers in memory
-	 *
-	 * @param paths Audio paths
-	 * @return Promise
-	 */
-	public static Promise<List<Promise<Void>>> audioBuffer(String... paths) {
-		List<Promise<Void>> promiseList = new ArrayList<>(paths.length);
-
-		for(String path : paths) {
-			promiseList.add(
-				new Promise<>(prom -> {
-					MediaPlayer player;
-
-					try {
-						player = new MediaPlayer(new Media(resource(path).toURI().toString()));
-
-						AUDIO.put(path, player);
-					} catch (Exception ex) {
-						throw new IllegalStateException("Could not buffer audio '" + path + "'", ex);
-					}
-
-					player.setOnReady(prom::success);
-				})
-			);
-		}
-
-		return Promise.combine(promiseList);
-    }
-
-	/**
-	 * Returns the Media for the specified path. Make sure the
-	 * specified path is loaded by including it into a call to
-	 * {@link #audioBuffer(String...)}.
+	 * Returns the MediaPlayer for the specified resource
 	 *
 	 * @param path Path
-	 * @return Media
+	 * @return MediaPlayer Promise
 	 */
-	public static MediaPlayer audio(String path) {
-		return AUDIO.get(path);
-    }
+	public static Promise<MediaPlayer> audioBig(String path) {
+		return new Promise<>(prom -> {
+			try {
+				MediaPlayer player = new MediaPlayer(new Media(resource(path).toURI().toString()));
+
+				player.setOnReady(() -> prom.success(player));
+			} catch (URISyntaxException ex) {
+				throw new RuntimeException(ex);
+			}
+		});
+	}
+
+	/**
+	 * Returns the AudioClip for the specified resource
+	 *
+	 * @param path Path
+	 * @return AudioClip
+	 */
+	public static AudioClip audioSmall(String path) {
+		try {
+			return new AudioClip(resource(path).toURI().toString());
+		} catch (URISyntaxException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
 
 }
