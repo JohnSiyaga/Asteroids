@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ApexVcsIndex">
+    <index-move-record>
+      <option name="firstPath" value="/Client/src/main/java/net/exodiusmc/asteroids/client/common/PlayMenuLayer.java" />
+      <option name="path" value="/Client/src/main/java/net/exodiusmc/asteroids/client/layers/PlayMenuLayer.java" />
+    </index-move-record>
+    <index-move-record>
+      <option name="firstPath" value="/Client/src/main/java/net/exodiusmc/asteroids/client/common/SpaceLayer.java" />
+      <option name="path" value="/Client/src/main/java/net/exodiusmc/asteroids/client/layers/SpaceLayer.java" />
+    </index-move-record>
+    <index-move-record>
+      <option name="firstPath" value="/Client/src/main/java/net/exodiusmc/asteroids/client/common/MenuLayer.java" />
+      <option name="path" value="/Client/src/main/java/net/exodiusmc/asteroids/client/layers/MenuLayer.java" />
+    </index-move-record>
+    <index-move-record>
+      <option name="firstPath" value="/Client/src/main/java/net/exodiusmc/asteroids/client/common/ShipTextureFactory.java" />
+      <option name="path" value="/Client/src/main/java/net/exodiusmc/asteroids/client/layers/ShipTextureFactory.java" />
+    </index-move-record>
+  </component>
+</project>
