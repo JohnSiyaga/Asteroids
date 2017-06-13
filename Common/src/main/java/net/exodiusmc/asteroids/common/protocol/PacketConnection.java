@@ -69,6 +69,27 @@ public class PacketConnection {
 	}
 
 	/**
+	 * Close the channel and send a disconnect reason to the remote.
+	 * The msg can be left null, in which no reason will be specified.
+	 *
+	 * @param msg Disconnect reason, may be null
+	 * @return Promise
+	 */
+	public Promise<Void> disconnect(String msg) {
+		return new Promise<>(prom -> {
+			if(msg == null) {
+				channel.close().addListener(future -> prom.success());
+			} else {
+				channel.writeAndFlush(msg)
+					.addListener(future -> {
+						channel.close();
+						prom.success();
+					});
+			}
+		});
+	}
+
+	/**
 	 * Attach a PacketListener to this PacketConnection.
 	 *
 	 * @param listener PacketListener

@@ -9,10 +9,8 @@ package net.exodiusmc.asteroids.common.protocol.packet;
  */
 public interface RespondablePacket extends Packet {
 
-	// TODO Revise RespondablePacket methods
+	void getRequest(SimplePacket packet);
 
-	void encodePayload();
-
-	void decodePayload();
+	void getResponse(SimplePacket packet);
 
 }
