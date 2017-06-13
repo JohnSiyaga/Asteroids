@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.MediaPlayer;
 import net.exodiusmc.asteroids.client.GameRuntime;
 import net.exodiusmc.asteroids.client.Layer;
 import net.exodiusmc.asteroids.common.util.Loader;
@@ -78,8 +79,10 @@ public class MenuLayer implements Layer {
             } else if(e.getCode() == KeyCode.SPACE || e.getCode() == KeyCode.ENTER) {
                 if(selectedButton == 0) {           // Play
                     runtime.getLayers().replace(new PlayMenuLayer());
-                } else  if(selectedButton == 1) {   // Settings
 
+	                buttonBeep();
+                } else  if(selectedButton == 1) {   // Settings
+	                buttonBeep();
                 } else  if(selectedButton == 2) {   // Quit
                     runtime.getWindow().close();
                 }
@@ -92,6 +95,12 @@ public class MenuLayer implements Layer {
     @Override
     public void unregister(GameRuntime runtime) {
         runtime.getScene().removeEventHandler(KeyEvent.KEY_PRESSED, keyEvent);
+    }
+
+    public static void buttonBeep() {
+	    MediaPlayer player = Loader.audio("sound/buzz.mp3");
+	    player.stop();
+	    player.play();
     }
 
 }

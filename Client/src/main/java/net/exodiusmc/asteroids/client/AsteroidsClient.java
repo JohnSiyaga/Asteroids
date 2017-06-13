@@ -64,13 +64,13 @@ public class AsteroidsClient extends Application {
 	    Loader.audioBuffer(
 			"sound/soundtrack.mp3",
 	        "sound/destruction.mp3",
-	        "sound/explosion.mp3"
+	        "sound/explosion.mp3",
+	        "sound/shoot.mp3",
+	        "sound/buzz.mp3"
         ).then(prom -> {
 		    window.show();
 
 	        startGame();
-
-	        Loader.audio("sound/soundtrack.mp3").play();
         }).error(Throwable::printStackTrace);
     }
 

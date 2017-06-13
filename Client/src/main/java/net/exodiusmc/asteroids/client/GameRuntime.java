@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
+import net.exodiusmc.asteroids.common.util.Loader;
 
 /**
  * Runtime runner for running the game loop.
@@ -17,17 +18,27 @@ public class GameRuntime extends AnimationTimer {
 
     private LayerManager layers;
     private GraphicsContext ctx;
+    private Soundtrack cadet;
     private Scene scene;
     private Stage window;
 
     public GameRuntime(Scene scene, Stage window, GraphicsContext ctx) {
         this.scene = scene;
         this.window = window;
+        this.cadet = new Soundtrack(Loader.audio("sound/soundtrack.mp3"));
         this.layers = new LayerManager(this);
         this.ctx = ctx;
     }
 
-    @Override
+	@Override
+	public void start() {
+		super.start();
+
+		// Start the soundtrack as the game starts
+		this.cadet.play();
+	}
+
+	@Override
     public void handle(long now) {
         // Clear the canvas
         ctx.clearRect(0, 0, ctx.getCanvas().getWidth(), ctx.getCanvas().getHeight());
@@ -55,4 +66,8 @@ public class GameRuntime extends AnimationTimer {
     public Stage getWindow() {
         return window;
     }
+
+	public Soundtrack getSoundtrack() {
+		return cadet;
+	}
 }

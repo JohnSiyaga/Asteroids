@@ -22,15 +22,15 @@ public class ShipTextureFactory {
             case DEFAULT:
                 return Loader.image("img/ship/default.png");
             case AIR_WING:
-                break;
+	            return Loader.image("img/ship/air_wing.png");
             case BLUE_BIRD:
-                break;
+	            return Loader.image("img/ship/blue_bird.png");
             case EXO_FIGHTER:
-                break;
+	            return Loader.image("img/ship/exo_fighter.png");
             case ARMAGEDDON:
-                break;
+	            return Loader.image("img/ship/armageddon.png");
             case GREEN_FLAME:
-                break;
+	            return Loader.image("img/ship/green_flame.png");
         }
 
         throw new IllegalArgumentException();

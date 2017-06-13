@@ -20,6 +20,10 @@ public class PlayMenuLayer implements Layer {
 
     private Image logo, singleplayer, singleplayer_selected, multiplayer, multiplayer_selected, back, back_selected;
     private int selectedButton = 0;
+
+	private double opacity = 1;
+    private Runnable opacityCompletion = null;
+
     private EventHandler<KeyEvent> keyEvent;
 
     public PlayMenuLayer(){
@@ -34,11 +38,20 @@ public class PlayMenuLayer implements Layer {
 
     @Override
     public void update(GameRuntime runtime) {
+		if(opacityCompletion != null) {
+			this.opacity -= 0.03;
 
+			if(this.opacity < 0) {
+				opacityCompletion.run();
+				opacityCompletion = null;
+			}
+		}
     }
 
     @Override
     public void render(GameRuntime runtime, GraphicsContext gfx) {
+    	gfx.setGlobalAlpha(opacity);
+
         gfx.drawImage(logo, (runtime.getCanvas().getWidth() / 2)- (logo.getWidth() / 2), 90);
 
         if(selectedButton == 0) {
@@ -58,13 +71,13 @@ public class PlayMenuLayer implements Layer {
         } else {
             gfx.drawImage(back, 283, 340 + 160);
         }
+
+	    gfx.setGlobalAlpha(1);
     }
 
     @Override
     public void register(GameRuntime runtime) {
         this.keyEvent = e -> {
-            System.out.println("Pressed");
-
             if(e.getCode() == KeyCode.UP) {
                 this.selectedButton--;
 
@@ -76,12 +89,20 @@ public class PlayMenuLayer implements Layer {
                 if(this.selectedButton == BUTTONS)
                     this.selectedButton = 0;
             } else if(e.getCode() == KeyCode.SPACE || e.getCode() == KeyCode.ENTER) {
-                if(selectedButton == 0) {           // Play Singleplayer
-                    runtime.getLayers().replace(new SPLayer());
-                } else  if(selectedButton == 1) {   // Play Multiplayer
+                if(selectedButton == 0) {
+	                // Play Singleplayer
+                    opacityCompletion = () -> runtime.getLayers().replace(new SPLayer());
+                    runtime.getSoundtrack().fadeOut();
 
-                } else  if(selectedButton == 2) {   // Back to main menu
+	                MenuLayer.buttonBeep();
+                } else if(selectedButton == 1) {
+	                // Play Multiplayer
+	                MenuLayer.buttonBeep();
+                } else if(selectedButton == 2) {
+	                // Back to main menu
                     runtime.getLayers().replace(new MenuLayer());
+
+	                MenuLayer.buttonBeep();
                 }
             }
         };

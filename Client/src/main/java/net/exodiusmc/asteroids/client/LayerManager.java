@@ -2,6 +2,7 @@ package net.exodiusmc.asteroids.client;
 
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -25,7 +26,7 @@ public class LayerManager {
      * Tick this layer and call the update and render handlers
      */
     public void tick(GraphicsContext gfx) {
-        layers.forEach(layer -> {
+        new ArrayList<>(layers).forEach(layer -> {
             layer.update(runtime);
             layer.render(runtime, gfx);
         });
