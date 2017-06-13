@@ -30,7 +30,7 @@ public class NetworkClient implements Closeable {
 	 * @return
 	 */
 	public Promise<Void> connect() {
-
+		return null;
 	}
 
 	@Override

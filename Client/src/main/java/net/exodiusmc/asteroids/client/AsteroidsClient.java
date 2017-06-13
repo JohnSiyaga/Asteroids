@@ -9,11 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import net.exodiusmc.asteroids.client.layers.SpaceLayer;
 import net.exodiusmc.asteroids.client.layers.MenuLayer;
+import net.exodiusmc.asteroids.client.layers.SpaceLayer;
 import net.exodiusmc.asteroids.common.util.Loader;
 
 /**
@@ -30,8 +29,6 @@ public class AsteroidsClient extends Application {
 
     private Stage window;
     private Scene view;
-
-    private MediaPlayer soundtrack;
 
     public static void main(String[] args) {
         launch(args);
@@ -51,11 +48,6 @@ public class AsteroidsClient extends Application {
 
         window.initStyle(StageStyle.UNDECORATED);
 
-        window.show();
-
-        this.soundtrack = new MediaPlayer(Loader.sound("sound/soundtrack.mp3"));
-        soundtrack.play();
-
         view.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
             if(e.getCode() == KeyCode.ESCAPE) {
                 window.close();
@@ -68,7 +60,18 @@ public class AsteroidsClient extends Application {
             System.exit(0);
         });
 
-        startGame();
+        // Load all audio files and open the game when done
+	    Loader.audioBuffer(
+			"sound/soundtrack.mp3",
+	        "sound/destruction.mp3",
+	        "sound/explosion.mp3"
+        ).then(prom -> {
+		    window.show();
+
+	        startGame();
+
+	        Loader.audio("sound/soundtrack.mp3").play();
+        }).error(Throwable::printStackTrace);
     }
 
     public void startGame() {

@@ -2,6 +2,7 @@ package net.exodiusmc.asteroids.common.util;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -71,7 +72,7 @@ public class Promise<R> implements Cloneable, Comparable<Promise<R>> {
     public int isSuccess() {
         if(!completed) return 0;
 
-        return result != null ? 1 : -1;
+        return failure == null ? 1 : -1;
     }
 
     /**
@@ -219,8 +220,9 @@ public class Promise<R> implements Cloneable, Comparable<Promise<R>> {
         this.completed = true;
         this.failure = error;
 
-        for(Consumer<Throwable> handler : failure_observers)
-            handler.accept(failure);
+        for(Consumer<Throwable> handler : failure_observers) {
+	        handler.accept(failure);
+        }
     }
 
     /**
@@ -259,18 +261,68 @@ public class Promise<R> implements Cloneable, Comparable<Promise<R>> {
 	 * @param promises Sub promises
 	 * @return Promise
 	 */
-	public static Promise<Void> combine(Promise<?>... promises) {
+	public static <T> Promise<List<Promise<T>>> combine(List<Promise<T>> promises) {
 		return new Promise<>(master -> {
-			for(Promise p1 : promises) {
-				//noinspection unchecked
-				p1.then(o -> {
-					if(Arrays.stream(promises)
-						.filter(Promise::isCalled)
-						.count() == promises.length) {
-						master.success();
-					}
-				});
+			// Initial check
+			for(Promise<T> prom : promises) {
+				if(prom.isSuccess() == -1) {
+					master.failure(prom.failure);
+					return;
+				}
+			}
+
+			for(Promise<T> promise : promises) {
+				promise
+					.then(t -> combineCheck(master, promises))
+					.error(e -> combineCheck(master, promises));
 			}
 		});
+	}
+
+	/**
+	 * Create a new combined promise that succeeds when all sub promises are completed.
+	 *
+	 * @param promiseArray Array of promises
+	 * @return Promise
+	 */
+	@SafeVarargs
+	public static <T> Promise<List<Promise<T>>> combine(Promise<T>... promiseArray) {
+		List<Promise<T>> promises = Arrays.asList(promiseArray);
+
+		return new Promise<>(master -> {
+			// Initial check
+			for(Promise<T> prom : promises) {
+				if(prom.isSuccess() == -1) {
+					master.failure(prom.failure);
+					return;
+				}
+			}
+
+			for(Promise<T> promise : promises) {
+				promise
+					.then(t -> combineCheck(master, promises))
+					.error(e -> combineCheck(master, promises));
+			}
+		});
+	}
+
+    private static <T> void combineCheck(Promise<List<Promise<T>>> master, List<Promise<T>> combined) {
+		int success = 0;
+
+		for(Promise<T> prom : combined) {
+			if(prom.isSuccess() == -1) {
+				if(!master.isCalled()) {
+					master.failure(prom.failure);
+				}
+
+				return;
+			} else if(prom.isSuccess() == 1) {
+				success++;
+			}
+		}
+
+		if(success == combined.size()) {
+			master.success(combined);
+		}
     }
 }
