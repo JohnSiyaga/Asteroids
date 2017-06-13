@@ -3,7 +3,6 @@ package net.exodiusmc.asteroids.client.impl;
 import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.media.MediaPlayer;
 import net.exodiusmc.asteroids.client.Drawable;
 import net.exodiusmc.asteroids.client.GameRuntime;
 import net.exodiusmc.asteroids.client.layers.ShipTextureFactory;
@@ -91,9 +90,7 @@ public class Spaceship implements AbstractSpaceship, Drawable {
         this.bullets.add(new Bullet(this));
 
 	    Platform.runLater(() -> {
-		    MediaPlayer shoot = Loader.audio("sound/shoot.mp3");
-		    shoot.stop();
-		    shoot.play();
+		    Loader.audioSmall("sound/shoot.mp3").play();
 	    });
     }
 

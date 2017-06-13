@@ -5,7 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.media.MediaPlayer;
 import net.exodiusmc.asteroids.client.GameRuntime;
 import net.exodiusmc.asteroids.client.Layer;
 import net.exodiusmc.asteroids.common.util.Loader;
@@ -98,9 +97,7 @@ public class MenuLayer implements Layer {
     }
 
     public static void buttonBeep() {
-	    MediaPlayer player = Loader.audio("sound/buzz.mp3");
-	    player.stop();
-	    player.play();
+	    Loader.audioSmall("sound/buzz.mp3").play();
     }
 
 }

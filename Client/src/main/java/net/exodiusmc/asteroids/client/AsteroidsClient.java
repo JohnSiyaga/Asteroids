@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import net.exodiusmc.asteroids.client.layers.MenuLayer;
@@ -61,23 +62,16 @@ public class AsteroidsClient extends Application {
         });
 
         // Load all audio files and open the game when done
-	    Loader.audioBuffer(
-			"sound/soundtrack.mp3",
-	        "sound/destruction.mp3",
-	        "sound/explosion.mp3",
-	        "sound/shoot.mp3",
-	        "sound/buzz.mp3"
-        ).then(prom -> {
-		    window.show();
+	    Loader.audioBig("sound/soundtrack.mp3").then(player -> {
+            window.show();
 
-	        startGame();
-        }).error(Throwable::printStackTrace);
+            startGame(player);
+        });
     }
 
-    public void startGame() {
+    public void startGame(MediaPlayer soundtrack) {
         // Start and run the game runtime
-        System.out.println(view);
-        GameRuntime runtime = new GameRuntime(view, window, cvs.getGraphicsContext2D());
+        GameRuntime runtime = new GameRuntime(view, window, soundtrack, cvs.getGraphicsContext2D());
         runtime.start();
 
         // Add essential layers to the stack

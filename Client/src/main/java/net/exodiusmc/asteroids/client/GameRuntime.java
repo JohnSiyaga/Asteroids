@@ -4,8 +4,8 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import net.exodiusmc.asteroids.common.util.Loader;
 
 /**
  * Runtime runner for running the game loop.
@@ -22,10 +22,10 @@ public class GameRuntime extends AnimationTimer {
     private Scene scene;
     private Stage window;
 
-    public GameRuntime(Scene scene, Stage window, GraphicsContext ctx) {
+    public GameRuntime(Scene scene, Stage window, MediaPlayer player, GraphicsContext ctx) {
         this.scene = scene;
         this.window = window;
-        this.cadet = new Soundtrack(Loader.audio("sound/soundtrack.mp3"));
+        this.cadet = new Soundtrack(player);
         this.layers = new LayerManager(this);
         this.ctx = ctx;
     }

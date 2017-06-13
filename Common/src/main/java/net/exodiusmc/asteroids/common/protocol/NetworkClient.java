@@ -104,9 +104,9 @@ public class NetworkClient implements Closeable {
 			ChannelPipeline pipe = channel.pipeline();
 
 			pipe.addLast("LengthDecoder", new LengthFieldBasedFrameDecoder(10000, 0, 4, 0, 4));
-			pipe.addLast("PacketDecoder", new InboundPacketDecoder(this));
+			// TODO pipe.addLast("PacketDecoder", new InboundPacketDecoder(this));
 			pipe.addLast("LengthEncoder", new LengthFieldPrepender(4));
-			pipe.addLast("PacketEncoder", new OutboundPacketEncoder(this));
+			// TODO pipe.addLast("PacketEncoder", new OutboundPacketEncoder(this));
 
 			// Create a PacketConnection
 			serverConnection = new PacketConnection(channel);
