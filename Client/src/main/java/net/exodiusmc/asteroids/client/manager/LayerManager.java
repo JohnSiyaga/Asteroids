@@ -1,6 +1,8 @@
-package net.exodiusmc.asteroids.client;
+package net.exodiusmc.asteroids.client.manager;
 
 import javafx.scene.canvas.GraphicsContext;
+import net.exodiusmc.asteroids.client.GameRuntime;
+import net.exodiusmc.asteroids.client.Layer;
 
 import java.util.ArrayList;
 import java.util.Stack;

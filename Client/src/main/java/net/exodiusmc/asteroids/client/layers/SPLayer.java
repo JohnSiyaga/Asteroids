@@ -1,9 +1,7 @@
 package net.exodiusmc.asteroids.client.layers;
 
-import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import net.exodiusmc.asteroids.client.GameRuntime;
 import net.exodiusmc.asteroids.client.Layer;
 import net.exodiusmc.asteroids.client.RenderUtils;
@@ -21,29 +19,25 @@ import net.exodiusmc.asteroids.common.ShipType;
 public class SPLayer implements Layer {
 
     private Spaceship ship;
-	private EventHandler<KeyEvent> keyUpEvent;
-    private EventHandler<KeyEvent> keyDownEvent;
 
     private SpriteAnimation shipAnimation;
     private int shipAnimationTick = 0;
 
-    private boolean leftPressed;
-    private boolean rightPressed;
-
     @Override
     public void update(GameRuntime runtime) {
+        // Movement
     	if(ship.offset == 0) {
     		if(!runtime.getSoundtrack().isActive())
     			runtime.getSoundtrack().play();
 
-		    if (rightPressed) {
+		    if(runtime.getInput().isKeyPressed(KeyCode.RIGHT)) {
 			    ship.motion += .9;
-		    } else if (leftPressed) {
+		    } else if(runtime.getInput().isKeyPressed(KeyCode.LEFT)) {
 			    ship.motion -= .9;
 		    }
 
 		    ship.position += ship.motion;
-		    ship.motion *= 0.92;
+		    ship.motion *= 0.93;
 
 		    if (ship.position < 200) {
 			    ship.position = 200;
@@ -59,11 +53,15 @@ public class SPLayer implements Layer {
 			    ship.offset = 0;
 		    }
 	    }
+
+	    // Shooting
+        if(ship.offset == 0 && runtime.getInput().isKeyPressed(KeyCode.SPACE)) {
+            ship.shoot();
+        }
     }
 
     @Override
     public void render(GameRuntime runtime, GraphicsContext gfx) {
-
         // Draw the spaceship
 	    RenderUtils.drawRotatedImage(
 	    	gfx,
@@ -81,33 +79,10 @@ public class SPLayer implements Layer {
         this.ship = new Spaceship(runtime, ShipType.EXO_FIGHTER, ShipDirection.UP);
         this.shipAnimation = new SpriteAnimation(ship.getTexture(), 4, true);
         this.ship.offset = 280;
-
-        this.keyDownEvent = e -> {
-            if(e.getCode() == KeyCode.LEFT) {
-                leftPressed = true;
-            } else if(e.getCode() == KeyCode.RIGHT) {
-                rightPressed = true;
-            } else if(ship.offset == 0 && e.getCode() == KeyCode.SPACE) {
-            	ship.shoot();
-            }
-        };
-
-        this.keyUpEvent = e -> {
-            if(e.getCode() == KeyCode.LEFT) {
-                leftPressed = false;
-            } else if(e.getCode() == KeyCode.RIGHT) {
-                rightPressed = false;
-            }
-        };
-
-        runtime.getScene().addEventHandler(KeyEvent.KEY_RELEASED, keyUpEvent);
-        runtime.getScene().addEventHandler(KeyEvent.KEY_PRESSED, keyDownEvent);
     }
 
     @Override
     public void unregister(GameRuntime runtime) {
-        runtime.getScene().removeEventHandler(KeyEvent.KEY_RELEASED, keyUpEvent);
-        runtime.getScene().removeEventHandler(KeyEvent.KEY_PRESSED, keyDownEvent);
     }
 
 }
