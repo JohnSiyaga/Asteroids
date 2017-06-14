@@ -6,6 +6,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import net.exodiusmc.asteroids.client.manager.InputManager;
+import net.exodiusmc.asteroids.client.manager.LayerManager;
 
 /**
  * Runtime runner for running the game loop.
@@ -17,6 +19,7 @@ import javafx.stage.Stage;
 public class GameRuntime extends AnimationTimer {
 
     private LayerManager layers;
+    private InputManager input;
     private GraphicsContext ctx;
     private Soundtrack cadet;
     private Scene scene;
@@ -27,6 +30,7 @@ public class GameRuntime extends AnimationTimer {
         this.window = window;
         this.cadet = new Soundtrack(player);
         this.layers = new LayerManager(this);
+        this.input = new InputManager(this);
         this.ctx = ctx;
     }
 
@@ -35,7 +39,7 @@ public class GameRuntime extends AnimationTimer {
 		super.start();
 
 		// Start the soundtrack as the game starts
-		this.cadet.play();
+		Util.setTimeout(500, () -> this.cadet.play());
 	}
 
 	@Override
@@ -49,6 +53,10 @@ public class GameRuntime extends AnimationTimer {
 
     public LayerManager getLayers() {
         return layers;
+    }
+
+    public InputManager getInput() {
+        return input;
     }
 
     public GraphicsContext getContext() {

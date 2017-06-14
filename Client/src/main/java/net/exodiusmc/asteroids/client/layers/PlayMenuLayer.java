@@ -78,33 +78,35 @@ public class PlayMenuLayer implements Layer {
     @Override
     public void register(GameRuntime runtime) {
         this.keyEvent = e -> {
-            if(e.getCode() == KeyCode.UP) {
-                this.selectedButton--;
+	        if(opacityCompletion == null) {
+		        if (e.getCode() == KeyCode.UP) {
+			        this.selectedButton--;
 
-                if(this.selectedButton < 0)
-                    this.selectedButton = BUTTONS - 1;
-            } else if(e.getCode() == KeyCode.DOWN) {
-                this.selectedButton++;
+			        if (this.selectedButton < 0)
+				        this.selectedButton = BUTTONS - 1;
+		        } else if (e.getCode() == KeyCode.DOWN) {
+			        this.selectedButton++;
 
-                if(this.selectedButton == BUTTONS)
-                    this.selectedButton = 0;
-            } else if(e.getCode() == KeyCode.SPACE || e.getCode() == KeyCode.ENTER) {
-                if(selectedButton == 0) {
-	                // Play Singleplayer
-                    opacityCompletion = () -> runtime.getLayers().replace(new SPLayer());
-                    runtime.getSoundtrack().fadeOut();
+			        if (this.selectedButton == BUTTONS)
+				        this.selectedButton = 0;
+		        } else if (e.getCode() == KeyCode.SPACE || e.getCode() == KeyCode.ENTER) {
+			        if (selectedButton == 0) {
+				        // Play Singleplayer
+				        opacityCompletion = () -> runtime.getLayers().replace(new SPLayer());
+				        runtime.getSoundtrack().fadeOut();
 
-	                MenuLayer.buttonBeep();
-                } else if(selectedButton == 1) {
-	                // Play Multiplayer
-	                MenuLayer.buttonBeep();
-                } else if(selectedButton == 2) {
-	                // Back to main menu
-                    runtime.getLayers().replace(new MenuLayer());
+				        MenuLayer.buttonBeep();
+			        } else if (selectedButton == 1) {
+				        // Play Multiplayer
+				        MenuLayer.buttonBeep();
+			        } else if (selectedButton == 2) {
+				        // Back to main menu
+				        runtime.getLayers().replace(new MenuLayer());
 
-	                MenuLayer.buttonBeep();
-                }
-            }
+				        MenuLayer.buttonBeep();
+			        }
+		        }
+	        }
         };
 
         runtime.getScene().addEventHandler(KeyEvent.KEY_PRESSED, keyEvent);

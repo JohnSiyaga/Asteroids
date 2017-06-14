@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import net.exodiusmc.asteroids.client.Drawable;
 import net.exodiusmc.asteroids.client.GameRuntime;
 import net.exodiusmc.asteroids.client.layers.ShipTextureFactory;
+import net.exodiusmc.asteroids.common.Position;
 import net.exodiusmc.asteroids.common.ShipDirection;
 import net.exodiusmc.asteroids.common.ShipType;
 import net.exodiusmc.asteroids.common.abstraction.AbstractBullet;
@@ -27,8 +28,7 @@ public class Spaceship implements AbstractSpaceship, Drawable {
     private ShipType type;
 
     public double motion;
-    public double position;
-    public double offset;
+    public Position position;
 
     private ShipDirection direction;
     private Set<AbstractBullet> bullets;
@@ -45,7 +45,10 @@ public class Spaceship implements AbstractSpaceship, Drawable {
 
         // Standard movement values
         this.motion = 0;
-        this.position = (runtime.getCanvas().getWidth() / 2) - (texture.getWidth() / 8);
+        this.position = new Position(
+        	(runtime.getCanvas().getWidth() / 2) - (texture.getWidth() / 8),
+	        runtime.getCanvas().getHeight() + 100
+        );
     }
 
     @Override
@@ -59,7 +62,7 @@ public class Spaceship implements AbstractSpaceship, Drawable {
     }
 
     @Override
-    public double getPosition() {
+    public Position getPosition() {
         return position;
     }
 
@@ -87,11 +90,11 @@ public class Spaceship implements AbstractSpaceship, Drawable {
     	if(System.currentTimeMillis() - SHOOT_THROTTLE < lastShot) return;
 
     	this.lastShot = System.currentTimeMillis();
-        this.bullets.add(new Bullet(this));
 
-	    Platform.runLater(() -> {
-		    Loader.audioSmall("sound/shoot.mp3").play();
-	    });
+		this.bullets.add(new Bullet(this, position.clone().add(13, 28), motion * 0.27));
+		this.bullets.add(new Bullet(this, position.clone().add(89, 28), motion * 0.27));
+
+	    Platform.runLater(() -> Loader.audioSmall("sound/shoot.mp3").play());
     }
 
     @Override
