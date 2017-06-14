@@ -64,6 +64,15 @@ public class SpriteAnimation {
     }
 
     /**
+     * Returns the current frame
+     *
+     * @return int
+     */
+    public int getCurrentFrame() {
+        return currentFrame;
+    }
+
+    /**
      * Sets a custom order of sprite iteration
      *
      * @param order int[]

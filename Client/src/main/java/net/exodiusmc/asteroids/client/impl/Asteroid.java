@@ -1,9 +1,7 @@
 package net.exodiusmc.asteroids.client.impl;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import net.exodiusmc.asteroids.client.Drawable;
-import net.exodiusmc.asteroids.client.RenderUtils;
+import net.exodiusmc.asteroids.client.SpriteAnimation;
 import net.exodiusmc.asteroids.common.Position;
 import net.exodiusmc.asteroids.common.util.Loader;
 import net.exodiusmc.asteroids.common.util.Rectangle;
@@ -17,7 +15,9 @@ import java.util.Random;
  * @version 1.0.0
  * @since 6/11/2017
  */
-public class Asteroid implements Drawable {
+public class Asteroid {
+
+    public static final int SIZE = 100;
 
 	private static final List<Image> textures;
 
@@ -39,27 +39,18 @@ public class Asteroid implements Drawable {
     public double angle;
     public double spin;
 
+    private boolean destroyed;
+    private SpriteAnimation explosion;
+
     // Locked constructor
     private Asteroid(Position pos) {
     	this.position = pos;
     }
 
-    public void draw(GraphicsContext gfx) {
-	    RenderUtils.drawRotatedImage(
-	    	gfx,
-		    texture,
-		    angle,
-		    position.x - (texture.getWidth() / 2),
-		    position.y - (texture.getHeight() / 2),
-		    100,
-		    100
-	    );
-    }
-
 	public Rectangle getBounds() {
 		return new Rectangle(
-			position.clone().add(-50, -50),
-			position.clone().add(50, 50)
+			new Position(position.x - 50, position.y - 50),
+			new Position(position.x + 50, position.y + 50)
 		);
 	}
 
@@ -71,11 +62,29 @@ public class Asteroid implements Drawable {
 		return speed;
 	}
 
-	/**
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    public Image getTexture() {
+        return texture;
+    }
+
+    public SpriteAnimation getExplosion() {
+        return explosion;
+    }
+
+    /**
 	 * Destroy the asteroid
 	 */
 	public void destroy() {
+	    if(destroyed) return;
+
     	Loader.audioSmall("sound/destruction.mp3").play();
+    	Image explosionTex = Loader.image("img/asteroid/explosion.png");
+
+    	this.destroyed = true;
+    	this.explosion = new SpriteAnimation(explosionTex,26, true);
 	}
 
 	/**

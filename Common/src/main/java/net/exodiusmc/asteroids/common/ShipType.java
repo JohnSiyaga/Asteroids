@@ -14,7 +14,8 @@ public enum ShipType {
     BLUE_BIRD("Blue Bird", Color.LIGHTSEAGREEN),
     EXO_FIGHTER("Exo Fighter", Color.LIMEGREEN),
     ARMAGEDDON("Armageddon", Color.ROSYBROWN),
-    GREEN_FLAME("Green Flame", Color.DARKOLIVEGREEN);
+    GREEN_FLAME("Green Flame", Color.DARKOLIVEGREEN),
+    FALCON("Falcon", Color.rgb(206, 190, 161));
 
     private String name;
     private Color bulletColor;

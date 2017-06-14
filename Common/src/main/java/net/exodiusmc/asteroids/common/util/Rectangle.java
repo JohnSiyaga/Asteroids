@@ -77,7 +77,7 @@ public class Rectangle {
 	 *
 	 * @return Position
 	 */
-	public Position center() {
+	public Position getCenter() {
 		return new Position(
 			Math.abs(min.x - max.x) / 2,
 			Math.abs(min.y - max.y) / 2

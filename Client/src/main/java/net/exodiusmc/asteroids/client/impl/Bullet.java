@@ -1,7 +1,5 @@
 package net.exodiusmc.asteroids.client.impl;
 
-import javafx.scene.canvas.GraphicsContext;
-import net.exodiusmc.asteroids.client.Drawable;
 import net.exodiusmc.asteroids.common.Position;
 import net.exodiusmc.asteroids.common.ShipDirection;
 import net.exodiusmc.asteroids.common.abstraction.AbstractBullet;
@@ -11,7 +9,7 @@ import net.exodiusmc.asteroids.common.abstraction.AbstractBullet;
  * @version 1.0.0
  * @since 5/27/2017
  */
-public class Bullet implements AbstractBullet, Drawable {
+public class Bullet implements AbstractBullet {
 
     private Spaceship source;
     private Position position;
@@ -38,25 +36,11 @@ public class Bullet implements AbstractBullet, Drawable {
         return this.angle;
     }
 
-    @Override
-    public void draw(GraphicsContext gfx) {
-        gfx.setStroke(source.getType().getBulletColor());
-        gfx.setLineWidth(4);
-
-        Position next = nextPosition();
-
-        gfx.beginPath();
-        gfx.moveTo(position.x, position.y);
-        gfx.lineTo(next.x, next.y);
-        gfx.stroke();
-        gfx.closePath();
-    }
-
     public void move() {
         this.position = nextPosition();
     }
 
-    private Position nextPosition() {
+    public Position nextPosition() {
         Position next = position.clone();
 
         // Move along the y axis

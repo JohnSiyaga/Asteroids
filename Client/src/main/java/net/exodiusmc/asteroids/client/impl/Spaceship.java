@@ -1,9 +1,7 @@
 package net.exodiusmc.asteroids.client.impl;
 
 import javafx.application.Platform;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import net.exodiusmc.asteroids.client.Drawable;
 import net.exodiusmc.asteroids.client.GameRuntime;
 import net.exodiusmc.asteroids.client.layers.ShipTextureFactory;
 import net.exodiusmc.asteroids.common.Position;
@@ -21,7 +19,7 @@ import java.util.Set;
  * @version 1.0.0
  * @since 5/27/2017
  */
-public class Spaceship implements AbstractSpaceship, Drawable {
+public class Spaceship implements AbstractSpaceship {
 
 	private static final long SHOOT_THROTTLE = 600;
 
@@ -95,10 +93,5 @@ public class Spaceship implements AbstractSpaceship, Drawable {
 		this.bullets.add(new Bullet(this, position.clone().add(89, 28), motion * 0.27));
 
 	    Platform.runLater(() -> Loader.audioSmall("sound/shoot.mp3").play());
-    }
-
-    @Override
-    public void draw(GraphicsContext gfx) {
-
     }
 }

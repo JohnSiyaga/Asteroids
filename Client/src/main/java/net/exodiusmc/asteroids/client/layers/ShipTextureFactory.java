@@ -31,6 +31,8 @@ public class ShipTextureFactory {
 	            return Loader.image("img/ship/armageddon.png");
             case GREEN_FLAME:
 	            return Loader.image("img/ship/green_flame.png");
+            case FALCON:
+                return Loader.image("img/ship/falcon.png");
         }
 
         throw new IllegalArgumentException();
