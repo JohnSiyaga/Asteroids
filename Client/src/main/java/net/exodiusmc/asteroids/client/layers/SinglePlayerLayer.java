@@ -13,6 +13,7 @@ import net.exodiusmc.asteroids.common.Position;
 import net.exodiusmc.asteroids.common.ShipDirection;
 import net.exodiusmc.asteroids.common.ShipType;
 import net.exodiusmc.asteroids.common.abstraction.AbstractBullet;
+import net.exodiusmc.asteroids.common.util.Collision;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -99,6 +100,21 @@ public class SinglePlayerLayer implements Layer {
     		if(ast.getPosition().y > runtime.getCanvas().getHeight() + 200) {
 			    astIt.remove();
 			    continue;
+		    }
+
+		    // Detect collision
+		    Iterator<AbstractBullet> bulIt = ship.getBullets().iterator();
+
+    		while(bulIt.hasNext()) {
+    			Bullet bullet = (Bullet) bulIt.next();
+
+    			if(Collision.squareCheck(ast.getBounds(), bullet.getPosition())
+			    && Collision.distanceCheck(ast.getPosition(), bullet.getPosition()) < 40) {
+    				astIt.remove();
+    				bulIt.remove();
+
+    				ast.destroy();
+			    }
 		    }
 
 		    // Move
