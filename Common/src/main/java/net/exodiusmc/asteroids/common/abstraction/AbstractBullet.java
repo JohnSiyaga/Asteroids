@@ -1,5 +1,7 @@
 package net.exodiusmc.asteroids.common.abstraction;
 
+import net.exodiusmc.asteroids.common.Position;
+
 /**
  * @author John Siyaga
  * @version 1.0.0
@@ -9,9 +11,8 @@ public interface AbstractBullet {
 
     AbstractSpaceship getSource();
 
-    double getX();
+    Position getPosition();
 
-    double getY();
-
+    double getAngle();
 
 }

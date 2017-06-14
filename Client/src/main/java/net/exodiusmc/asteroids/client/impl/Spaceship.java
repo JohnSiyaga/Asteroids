@@ -87,7 +87,9 @@ public class Spaceship implements AbstractSpaceship, Drawable {
     	if(System.currentTimeMillis() - SHOOT_THROTTLE < lastShot) return;
 
     	this.lastShot = System.currentTimeMillis();
-        this.bullets.add(new Bullet(this));
+
+//        this.bullets.add(new Bullet(this, new Position(position + 20, y)));
+//        this.bullets.add(new Bullet(this, ));
 
 	    Platform.runLater(() -> {
 		    Loader.audioSmall("sound/shoot.mp3").play();
