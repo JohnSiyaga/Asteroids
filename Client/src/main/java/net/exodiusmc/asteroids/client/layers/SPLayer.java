@@ -38,7 +38,8 @@ public class SPLayer implements Layer {
 
 		    if (rightPressed) {
 			    ship.motion += .9;
-		    } else if (leftPressed) {
+		    }
+		    if (leftPressed) {
 			    ship.motion -= .9;
 		    }
 
