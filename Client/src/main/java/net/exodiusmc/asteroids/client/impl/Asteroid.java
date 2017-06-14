@@ -6,6 +6,7 @@ import net.exodiusmc.asteroids.client.Drawable;
 import net.exodiusmc.asteroids.client.RenderUtils;
 import net.exodiusmc.asteroids.common.Position;
 import net.exodiusmc.asteroids.common.util.Loader;
+import net.exodiusmc.asteroids.common.util.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,12 +56,26 @@ public class Asteroid implements Drawable {
 	    );
     }
 
+	public Rectangle getBounds() {
+		return new Rectangle(
+			position.clone().add(-50, -50),
+			position.clone().add(50, 50)
+		);
+	}
+
 	public Position getPosition() {
 		return position;
 	}
 
 	public double getSpeed() {
 		return speed;
+	}
+
+	/**
+	 * Destroy the asteroid
+	 */
+	public void destroy() {
+    	Loader.audioSmall("sound/destruction.mp3").play();
 	}
 
 	/**
