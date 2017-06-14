@@ -77,7 +77,7 @@ public class Asteroid implements Drawable {
 		ast.texture = textures.get(idx);
 
 		// Random speed
-		ast.speed = 1.5 + rand.nextDouble() * 2;
+		ast.speed = 1.5 + rand.nextDouble() * 5;
 
 		// Random rotation speed
 		ast.spinRight = rand.nextBoolean();

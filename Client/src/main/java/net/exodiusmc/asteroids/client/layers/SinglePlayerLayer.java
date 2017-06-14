@@ -78,7 +78,7 @@ public class SinglePlayerLayer implements Layer {
 
 	    // Spawn asteroid
 	    if(ship.position.y <= runtime.getCanvas().getHeight() - 200
-		    && runtime.currentTick() % spawnRate == 0) {
+		    && runtime.currentTick() % (int) spawnRate == 0) {
 		    Position pos = new Position(
 			    320 + new Random().nextInt((int) runtime.getCanvas().getWidth() - 470),
 			    -50
@@ -87,7 +87,7 @@ public class SinglePlayerLayer implements Layer {
     		asteroids.add(Asteroid.nextAsteroid(pos));
 
     		// Increase spawn rate
-		    spawnRate -= 0.25;
+		    spawnRate -= 0.35;
 	    }
 
 	    Iterator<Asteroid> astIt = asteroids.iterator();
