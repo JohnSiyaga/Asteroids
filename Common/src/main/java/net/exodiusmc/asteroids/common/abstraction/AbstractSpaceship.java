@@ -1,5 +1,6 @@
 package net.exodiusmc.asteroids.common.abstraction;
 
+import net.exodiusmc.asteroids.common.Position;
 import net.exodiusmc.asteroids.common.ShipDirection;
 import net.exodiusmc.asteroids.common.ShipType;
 
@@ -16,7 +17,7 @@ public interface AbstractSpaceship {
 
     double getMotion();
 
-    double getPosition();
+    Position getPosition();
 
     int getHealth();
 

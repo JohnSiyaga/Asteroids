@@ -39,7 +39,7 @@ public class GameRuntime extends AnimationTimer {
 		super.start();
 
 		// Start the soundtrack as the game starts
-		this.cadet.play();
+		Util.setTimeout(500, () -> this.cadet.play());
 	}
 
 	@Override

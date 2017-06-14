@@ -41,12 +41,14 @@ public class Bullet implements AbstractBullet, Drawable {
     @Override
     public void draw(GraphicsContext gfx) {
         gfx.setStroke(source.getType().getBulletColor());
+        gfx.setLineWidth(4);
 
         Position next = nextPosition();
 
         gfx.beginPath();
         gfx.moveTo(position.x, position.y);
         gfx.lineTo(next.x, next.y);
+        gfx.stroke();
         gfx.closePath();
     }
 
@@ -57,11 +59,11 @@ public class Bullet implements AbstractBullet, Drawable {
     private Position nextPosition() {
         Position next = position.clone();
 
-        // Move along the y accis
+        // Move along the y axis
         if(source.getDirection() == ShipDirection.UP) {
-            next.y -= 3;
+            next.y -= 7;
         } else {
-            next.y += 3;
+            next.y += 7;
         }
 
         next.x += angle;
