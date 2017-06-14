@@ -77,7 +77,9 @@ public class MenuLayer implements Layer {
                     this.selectedButton = 0;
             } else if(e.getCode() == KeyCode.SPACE || e.getCode() == KeyCode.ENTER) {
                 if(selectedButton == 0) {           // Play
-                    runtime.getLayers().replace(new PlayMenuLayer());
+	                runtime.getLayers().pop();
+	                runtime.getLayers().replace(new PlayMenuLayer());
+	                runtime.getLayers().push(new HudLayer(false));
 
 	                buttonBeep();
                 } else  if(selectedButton == 1) {   // Settings

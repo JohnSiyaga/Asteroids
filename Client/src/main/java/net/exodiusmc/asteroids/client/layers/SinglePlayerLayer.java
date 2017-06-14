@@ -6,11 +6,18 @@ import net.exodiusmc.asteroids.client.GameRuntime;
 import net.exodiusmc.asteroids.client.Layer;
 import net.exodiusmc.asteroids.client.RenderUtils;
 import net.exodiusmc.asteroids.client.SpriteAnimation;
+import net.exodiusmc.asteroids.client.impl.Asteroid;
 import net.exodiusmc.asteroids.client.impl.Bullet;
 import net.exodiusmc.asteroids.client.impl.Spaceship;
+import net.exodiusmc.asteroids.common.Position;
 import net.exodiusmc.asteroids.common.ShipDirection;
 import net.exodiusmc.asteroids.common.ShipType;
 import net.exodiusmc.asteroids.common.abstraction.AbstractBullet;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
 
 
 /**
@@ -18,12 +25,15 @@ import net.exodiusmc.asteroids.common.abstraction.AbstractBullet;
  * @version 1.0.0
  * @since 6/11/2017
  */
-public class SPLayer implements Layer {
+public class SinglePlayerLayer implements Layer {
 
     private Spaceship ship;
 
     private SpriteAnimation shipAnimation;
+    private Set<Asteroid> asteroids;
     private int shipAnimationTick = 0;
+
+    private double spawnRate = 75;
 
     @Override
     public void update(GameRuntime runtime) {
@@ -65,6 +75,42 @@ public class SPLayer implements Layer {
 	    for(AbstractBullet aBullet : ship.getBullets()) {
 		    ((Bullet) aBullet).move();
 	    }
+
+	    // Spawn asteroid
+	    if(ship.position.y <= runtime.getCanvas().getHeight() - 200
+		    && runtime.currentTick() % spawnRate == 0) {
+		    Position pos = new Position(
+			    320 + new Random().nextInt((int) runtime.getCanvas().getWidth() - 470),
+			    -50
+		    );
+
+    		asteroids.add(Asteroid.nextAsteroid(pos));
+
+    		// Increase spawn rate
+		    spawnRate -= 0.25;
+	    }
+
+	    Iterator<Asteroid> astIt = asteroids.iterator();
+
+    	while(astIt.hasNext()) {
+    		Asteroid ast = astIt.next();
+
+    		// Remove off-screen asteroids
+    		if(ast.getPosition().y > runtime.getCanvas().getHeight() + 200) {
+			    astIt.remove();
+			    continue;
+		    }
+
+		    // Move
+		    ast.getPosition().y += ast.getSpeed();
+
+		    // Rotate
+		    if(ast.spinRight) {
+			    ast.angle += ast.spin;
+		    } else {
+		    	ast.angle -= ast.spin;
+		    }
+	    }
     }
 
     @Override
@@ -83,6 +129,11 @@ public class SPLayer implements Layer {
 		    ship.getPosition().y
 	    );
 
+	    // Asteroids
+	    for(Asteroid ast : asteroids) {
+	    	ast.draw(gfx);
+	    }
+
         shipAnimationTick++;
     }
 
@@ -90,6 +141,7 @@ public class SPLayer implements Layer {
     public void register(GameRuntime runtime) {
         this.ship = new Spaceship(runtime, ShipType.DEFAULT, ShipDirection.UP);
         this.shipAnimation = new SpriteAnimation(ship.getTexture(), 4, true);
+        this.asteroids = new HashSet<>();
     }
 
     @Override

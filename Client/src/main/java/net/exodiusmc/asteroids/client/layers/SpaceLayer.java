@@ -20,19 +20,9 @@ public class SpaceLayer implements Layer {
     private Image space2;
     private Image space3;
 
-    private Image wall;
-
     private int space1scroll = 0;
     private int space2scroll = 0;
     private int space3scroll = 0;
-
-    public SpaceLayer() {
-        this.space1 = Loader.image("img/space_1.png");
-        this.space2 = Loader.image("img/space_2.png");
-        this.space3 = Loader.image("img/space_3.png");
-
-        this.wall = Loader.image("img/side_wall.png");
-    }
 
     @Override
     public void update(GameRuntime runtime) {
@@ -45,7 +35,6 @@ public class SpaceLayer implements Layer {
 
     @Override
     public void render(GameRuntime runtime, GraphicsContext gfx) {
-        int width = (int) runtime.getCanvas().getWidth();
         int height = (int) runtime.getCanvas().getHeight();
 
         // Render the eternal void of space
@@ -60,13 +49,13 @@ public class SpaceLayer implements Layer {
 
         gfx.drawImage(space3, 0, space3scroll);
         gfx.drawImage(space3, 0, space3scroll - height);
-
-        gfx.drawImage(wall, 0, 0, wall.getWidth() / 2, wall.getHeight() / 2);
-        gfx.drawImage(wall, width, 0, -(wall.getWidth() / 2), wall.getHeight() / 2);
     }
 
     @Override
     public void register(GameRuntime runtime) {
+	    this.space1 = Loader.image("img/space_1.png");
+	    this.space2 = Loader.image("img/space_2.png");
+	    this.space3 = Loader.image("img/space_3.png");
     }
 
     @Override
