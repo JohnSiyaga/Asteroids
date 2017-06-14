@@ -25,6 +25,8 @@ public class GameRuntime extends AnimationTimer {
     private Scene scene;
     private Stage window;
 
+    private long tick = 0;
+
     public GameRuntime(Scene scene, Stage window, MediaPlayer player, GraphicsContext ctx) {
         this.scene = scene;
         this.window = window;
@@ -49,6 +51,8 @@ public class GameRuntime extends AnimationTimer {
 
         // Render the game
         layers.tick(ctx);
+
+        tick++;
     }
 
     public LayerManager getLayers() {
@@ -77,5 +81,9 @@ public class GameRuntime extends AnimationTimer {
 
 	public Soundtrack getSoundtrack() {
 		return cadet;
+	}
+
+	public long currentTick() {
+		return tick;
 	}
 }

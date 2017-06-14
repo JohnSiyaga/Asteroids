@@ -92,7 +92,11 @@ public class PlayMenuLayer implements Layer {
 		        } else if (e.getCode() == KeyCode.SPACE || e.getCode() == KeyCode.ENTER) {
 			        if (selectedButton == 0) {
 				        // Play Singleplayer
-				        opacityCompletion = () -> runtime.getLayers().replace(new SPLayer());
+				        opacityCompletion = () -> {
+					        runtime.getLayers().pop();
+					        runtime.getLayers().replace(new SinglePlayerLayer());
+					        runtime.getLayers().push(new HudLayer(true));
+				        };
 				        runtime.getSoundtrack().fadeOut();
 
 				        MenuLayer.buttonBeep();
@@ -101,7 +105,9 @@ public class PlayMenuLayer implements Layer {
 				        MenuLayer.buttonBeep();
 			        } else if (selectedButton == 2) {
 				        // Back to main menu
+				        runtime.getLayers().pop();
 				        runtime.getLayers().replace(new MenuLayer());
+				        runtime.getLayers().push(new HudLayer(true));
 
 				        MenuLayer.buttonBeep();
 			        }
