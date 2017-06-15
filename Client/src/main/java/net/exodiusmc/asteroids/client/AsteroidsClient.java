@@ -12,7 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import net.exodiusmc.asteroids.client.layers.HudLayer;
+import net.exodiusmc.asteroids.client.layers.SideWallLayer;
 import net.exodiusmc.asteroids.client.layers.MenuLayer;
 import net.exodiusmc.asteroids.client.layers.SpaceLayer;
 import net.exodiusmc.asteroids.common.util.Loader;
@@ -78,6 +78,6 @@ public class AsteroidsClient extends Application {
         // Add essential layers to the stack
         runtime.getLayers().push(new SpaceLayer());
         runtime.getLayers().push(new MenuLayer());
-        runtime.getLayers().push(new HudLayer(false));
+        runtime.getLayers().push(new SideWallLayer());
     }
 }

@@ -79,7 +79,7 @@ public class MenuLayer implements Layer {
                 if(selectedButton == 0) {           // Play
 	                runtime.getLayers().pop();
 	                runtime.getLayers().replace(new PlayMenuLayer());
-	                runtime.getLayers().push(new HudLayer(false));
+	                runtime.getLayers().push(new SideWallLayer());
 
 	                buttonBeep();
                 } else  if(selectedButton == 1) {   // Settings

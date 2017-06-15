@@ -95,7 +95,6 @@ public class PlayMenuLayer implements Layer {
 				        opacityCompletion = () -> {
 					        runtime.getLayers().pop();
 					        runtime.getLayers().replace(new SinglePlayerLayer());
-					        runtime.getLayers().push(new HudLayer(true));
 				        };
 				        runtime.getSoundtrack().fadeOut();
 
@@ -107,7 +106,7 @@ public class PlayMenuLayer implements Layer {
 				        // Back to main menu
 				        runtime.getLayers().pop();
 				        runtime.getLayers().replace(new MenuLayer());
-				        runtime.getLayers().push(new HudLayer(true));
+				        runtime.getLayers().push(new SideWallLayer());
 
 				        MenuLayer.buttonBeep();
 			        }

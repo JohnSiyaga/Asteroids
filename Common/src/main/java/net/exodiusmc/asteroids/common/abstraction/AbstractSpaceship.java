@@ -19,7 +19,7 @@ public interface AbstractSpaceship {
 
     Position getPosition();
 
-    int getHealth();
+    AbstractShipHealth getHealth();
 
     ShipDirection getDirection();
 

@@ -13,16 +13,19 @@ import net.exodiusmc.asteroids.common.util.Loader;
  * @version 1.0.0
  * @since 14/06/2017
  */
-public class HudLayer implements Layer {
+public class SideWallLayer implements Layer {
 
-	private boolean displayStats;
+	protected SinglePlayerLayer game;
 	private Image wall;
 
-	public HudLayer(boolean displayStats) {
-		this.displayStats = displayStats;
-	}
+    public SideWallLayer() {
+    }
 
-	@Override
+    protected SideWallLayer(SinglePlayerLayer game) {
+        this.game = game;
+    }
+
+    @Override
 	public void update(GameRuntime runtime) {
 
 	}
@@ -33,6 +36,7 @@ public class HudLayer implements Layer {
 
 		gfx.drawImage(wall, 0, 0, wall.getWidth() / 2, wall.getHeight() / 2);
 		gfx.drawImage(wall, width, 0, -(wall.getWidth() / 2), wall.getHeight() / 2);
+
 	}
 
 	@Override

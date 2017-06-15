@@ -3,6 +3,8 @@ package net.exodiusmc.asteroids.client.impl;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import net.exodiusmc.asteroids.client.GameRuntime;
+import net.exodiusmc.asteroids.client.ShipHealth;
+import net.exodiusmc.asteroids.client.SpriteAnimation;
 import net.exodiusmc.asteroids.client.layers.ShipTextureFactory;
 import net.exodiusmc.asteroids.common.Position;
 import net.exodiusmc.asteroids.common.ShipDirection;
@@ -24,6 +26,10 @@ public class Spaceship implements AbstractSpaceship {
 	private static final long SHOOT_THROTTLE = 600;
 
     private ShipType type;
+    private ShipHealth health;
+
+    protected SpriteAnimation explosion;
+    private boolean destroyed;
 
     public double motion;
     public Position position;
@@ -39,6 +45,7 @@ public class Spaceship implements AbstractSpaceship {
         this.type = type;
         this.direction = direction;
         this.bullets = new HashSet<>();
+        this.health = new ShipHealth();
         this.texture = ShipTextureFactory.getTexture(type);
 
         // Standard movement values
@@ -65,8 +72,8 @@ public class Spaceship implements AbstractSpaceship {
     }
 
     @Override
-    public int getHealth() {
-        return 5;
+    public ShipHealth getHealth() {
+        return health;
     }
 
     @Override
@@ -93,5 +100,22 @@ public class Spaceship implements AbstractSpaceship {
 		this.bullets.add(new Bullet(this, position.clone().add(89, 28), motion * 0.27));
 
 	    Platform.runLater(() -> Loader.audioSmall("sound/shoot.mp3").play());
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    /**
+     * Destroy the ship
+     */
+    public void destroy() {
+        if(destroyed) return;
+
+        Loader.audioSmall("sound/explosion.mp3").play();
+        Image explosionTex = Loader.image("img/asteroid/explosion.png");
+
+        this.destroyed = true;
+        this.explosion = new SpriteAnimation(explosionTex,26, true);
     }
 }
