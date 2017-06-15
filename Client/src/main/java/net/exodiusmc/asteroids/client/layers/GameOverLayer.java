@@ -64,11 +64,14 @@ public class GameOverLayer implements Layer {
     @Override
     public void register(GameRuntime runtime) {
         this.keyEvent = e -> {
-            if (e.getCode() == KeyCode.SPACE || e.getCode() == KeyCode.ENTER) {
-                runtime.getLayers().pop();
-                runtime.getLayers().replace(new MenuLayer());
+            if(game.ship.isDestroyed()) {
+                if (e.getCode() == KeyCode.SPACE || e.getCode() == KeyCode.ENTER) {
+                    runtime.getLayers().pop();
+                    runtime.getLayers().replace(new MenuLayer());
+                }
             }
         };
+
 
         runtime.getScene().addEventHandler(KeyEvent.KEY_PRESSED, keyEvent);
     }

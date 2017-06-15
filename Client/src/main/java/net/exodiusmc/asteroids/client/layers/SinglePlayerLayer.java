@@ -27,11 +27,12 @@ import java.util.Set;
  */
 public class SinglePlayerLayer implements Layer {
 
-    private Spaceship ship;
+    protected Spaceship ship;
 
     private SpriteAnimation shipAnimation;
     private Set<Asteroid> asteroids;
     private GameOverLayer go;
+    protected boolean gameOver;
 
     private double spawnRate = 75;
 
@@ -154,9 +155,15 @@ public class SinglePlayerLayer implements Layer {
 
             }
 
+            if(!ast.isDestroyed() && ast.getPosition().y >= 820 && !gameOver){
+                ast.destroy();
+                ship.getHealth().damage(ast);
+            }
+
             // Destroy the ship / End game
             if(ship.getHealth().getAmount() <= 0) {
                 ship.destroy();
+                gameOver = true;
 
                 Util.setTimeout(1000, () -> {
                     this.go.setGameOver();
