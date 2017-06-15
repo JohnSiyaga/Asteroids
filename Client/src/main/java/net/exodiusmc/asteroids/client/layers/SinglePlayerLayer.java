@@ -165,6 +165,8 @@ public class SinglePlayerLayer implements Layer {
                 ship.destroy();
                 gameOver = true;
 
+                runtime.getSoundtrack().setIdle();
+
                 Util.setTimeout(1000, () -> {
                     this.go.setGameOver();
                 });
