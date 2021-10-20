@@ -1,2 +1,2 @@
-# asteroid
-Asteroid game
+# Asteroids
+Asteroid game written in Java
